@@ -1,0 +1,19 @@
+@page "/events"
+@using EventEase.Client.Models
+@using EventEase.Client.Services
+@using EventEase.Client.Components
+@inject EventService EventService
+
+<h3>All Events</h3>
+
+@if (EventService.GetEvents() != null && EventService.GetEvents().Any())
+{
+    @foreach (var ev in EventService.GetEvents())
+    {
+        <EventCard EventData="ev" />
+    }
+}
+else
+{
+    <p>No events available.</p>
+}

@@ -1,0 +1,28 @@
+@using EventEase.Client.Models
+@using EventEase.Client.Services
+@inject EventService EventService
+@using Microsoft.AspNetCore.Components
+
+<div class="card mb-3">
+    <div class="card-body">
+        @if (EventData != null)
+        {
+            <h5 class="card-title">@EventData.Title</h5>
+            <p class="card-text">@EventData.Description</p>
+            <p class="card-text">
+                <small class="text-muted">
+                    @EventData.Date.ToShortDateString() at @EventData.Location
+                </small>
+            </p>
+        }
+        else
+        {
+            <p class="text-danger">Event data is not available.</p>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Event EventData { get; set; } = new Event();
+}

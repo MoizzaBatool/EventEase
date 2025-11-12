@@ -1,0 +1,33 @@
+@page "/attendance"
+@using EventEase.Client.Models
+@using EventEase.Client.Services
+@inject EventService EventService
+
+<h3>Attendance Tracker</h3>
+
+@if (EventService.GetEvents() != null && EventService.GetEvents().Any())
+{
+    @foreach (var ev in EventService.GetEvents())
+    {
+        <h5>@ev.Title (@ev.Date.ToShortDateString())</h5>
+
+        var attendees = EventService.GetAttendees(ev.Id);
+        if (attendees != null && attendees.Any())
+        {
+            <ul>
+                @foreach (var a in attendees)
+                {
+                    <li>@a.Name (@a.Email)</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No attendees registered yet.</p>
+        }
+    }
+}
+else
+{
+    <p>No events available.</p>
+}

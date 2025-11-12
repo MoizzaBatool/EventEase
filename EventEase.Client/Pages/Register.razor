@@ -1,0 +1,36 @@
+@page "/register"
+@using EventEase.Client.Models
+@using EventEase.Client.Services
+@using Microsoft.AspNetCore.Components.Forms
+@inject EventService EventService
+
+<h3>Register for Event</h3>
+
+<EditForm Model="newAttendee" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Name</label>
+        <InputText class="form-control" @bind-Value="newAttendee.Name" />
+    </div>
+    <div class="mb-3">
+        <label>Email</label>
+        <InputText type="email" class="form-control" @bind-Value="newAttendee.Email" />
+    </div>
+    <div class="mb-3">
+        <label>Event ID</label>
+        <InputNumber class="form-control" @bind-Value="newAttendee.EventId" />
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</EditForm>
+
+@code {
+    private Attendee newAttendee = new Attendee();
+
+    private void HandleSubmit()
+    {
+        EventService.RegisterAttendee(newAttendee);
+        newAttendee = new Attendee(); // reset form
+    }
+}
